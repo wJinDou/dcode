@@ -36,6 +36,16 @@ export default function Home() {
       <main>
         <HomepageFeatures />
       </main>
+      <div>
+        <div style={{color: "var(--ifm-color-primary)"}} > 主题</div>
+        <div style={{color: "var(--ifm-color-primary-dark)"}} > #89bdf0;</div>
+        <div style={{color: "var(--ifm-color-primary-darker)"}} > #78aee4;</div>
+        <div style={{color: "var(--ifm-color-primary-darkest)"}} > #5fa1e3;</div>
+        <div style={{color: "var(--ifm-color-primary-light)"}} > #add4fa;</div>
+        <div style={{color: "var(--ifm-color-primary-lighter)"}} > #c4e2ff;</div>
+        <div style={{color: "var(--ifm-color-primary-lightest)"}} > #d8ecff;</div>
+        <div>颜色：</div>
+    </div>
     </Layout>
   );
 }
