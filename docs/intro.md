@@ -2,11 +2,23 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# 关于Dcode
 
-Let's discover **Docusaurus in less than 5 minutes**.
+创建这个网站是为了做知识巩固使用，前端行业工作了很多年，但是感觉自己还是没有找到方向，所以就打算写一个网站来记录自己的一些知识，来帮助自己更好的学习，同时也帮助他人。
 
-## Getting Started
+## 内容规划
+- **基础**
+    - HTML
+    - CSS
+    - JavaScript
+- **框架**
+    - Vue
+    - React
+- **算法**
+    - 目前啥也不会
+- **工具**
+- **面试**
+- **杂项**
 
 Get started by **creating a new site**.
 
