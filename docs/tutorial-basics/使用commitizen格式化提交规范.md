@@ -77,27 +77,144 @@ echo '{ "path": "cz-conventional-changelog" }' > ~/.czrc
 2⃣️ 选择完type之后，会进入第二个阶段，选择`scope`，`scope`是可选的，用于说明本次提交的影响范围，如：Components，Directives，View等等不限。如果不想填写则可以按`enter`跳过。Header部分会成为: `<type>: <subject>`
 
 ```
-? Select the type of change that you're committing: feat:     A new feature
-? What is the scope of this change (e.g. component or file name): (press enter to skip) 
+? What is the scope of this change (e.g. component or file name): (press enter to skip) # 这里输入subject， 例如： Docs
 ```
 
-3⃣️ 
+3⃣️ 第三个阶段是填写`subject`，`subject`是必须的，用于说明提交的内容，如：添加了什么功能，修复了什么bug
 
-# Hello
-
-This is my **first Docusaurus document**!
+```shell
+? Write a short, imperative tense description of the change (max 88 chars):
+ (0)  # 这里输入subject部分,例如：加commit格式文档
 ```
 
-It is also possible to create your sidebar explicitly in `sidebars.js`:
-
-``` title="zsh"
-? Select the type of change that you're committing: 
-  ci:       Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs) 
-  chore:    Other changes that don't modify src or test files 
-  revert:   Reverts a previous commit 
-❯ feat:     A new feature 
-  fix:      A bug fix 
-  docs:     Documentation only changes 
-  style:    Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc) 
-(Move up and down to reveal more choices)
+4⃣️ 第四个阶段是填写`body`，`body`是可选的，用于对提交内容的详细解释，如：为什么修改，影响范围等
+```shell
+? Provide a longer description of the change: (press enter to skip) # 这里输入body
 ```
+
+5⃣️ 第五个阶段是填写`footer`，`footer`是可选的，用于列出一些备注内容，如：不兼容变动、关闭了哪些issue
+
+**不兼容变动** *虽然这个地方不怎么用*: 
+```shell
+? Are there any breaking changes? (y/N) # 如果这里输入了y
+# 则会在下面展示详细内容。
+? A BREAKING CHANGE commit requires a body. Please enter a longer description of the 
+commit itself:
+ # 这里输入破坏性的主体
+? Describe the breaking changes:
+ # 这里输入变动的详情内容
+```
+
+**关闭了哪些issue**,*或者关闭的bug编号之类,bug链接等*:
+```shell
+? Does this change affect any open issues? # 这里输入yes后，展示如下：
+? Add issue references (e.g. "fix #123", "re #123".):
+ # 例如： fix #1899
+```
+
+输入完之后就可以`git push`了。gitcommit的例子如下：
+```shell
+Author: user_name <user_email>
+Date:   当前的时间
+
+    docs(docs): 增加commit格式文档
+    
+    BREAKING CHANGE: 不兼容的详情
+    
+    fix #1899
+```
+
+## 🔧 配置commitizen
+
+### 🌈 配置自定义commit模板
+
+找到`npm`或者`yarn`的global文件夹下的`conventional-commit-types`文件夹里的`index.json`文件
+
+yarn的查看方式为：`yarn global dir`
+
+npm的查看方式为：`npm root -g`
+
+综合地址为：`全局global地址/node_modules/conventional-commit-types/index.json`然后打开
+
+假设需要增加一个提交类型，文件如下：
+```json title=conventional-commit-types/index.json
+{
+  "types": {
+    "feat": {
+      "description": "A new feature",
+      "title": "Features"
+    },
+    "fix": {
+      "description": "A bug fix",
+      "title": "Bug Fixes"
+    },
+    "docs": {
+      "description": "Documentation only changes",
+      "title": "Documentation"
+    },
+    "style": {
+      "description": "Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)",
+      "title": "Styles"
+    },
+    "refactor": {
+      "description": "A code change that neither fixes a bug nor adds a feature",
+      "title": "Code Refactoring"
+    },
+    "perf": {
+      "description": "A code change that improves performance",
+      "title": "Performance Improvements"
+    },
+    "test": {
+      "description": "Adding missing tests or correcting existing tests",
+      "title": "Tests"
+    },
+    "build": {
+      "description": "Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)",
+      "title": "Builds"
+    },
+    "ci": {
+      "description": "Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)",
+      "title": "Continuous Integrations"
+    },
+    "chore": {
+      "description": "Other changes that don't modify src or test files",
+      "title": "Chores"
+    },
+    "revert": {
+      "description": "Reverts a previous commit",
+      "title": "Reverts"
+    },
+    "newType": {
+      "description": "这里是Header部分的type部分",
+      "title": "New Type Title"
+    }
+  }
+}
+
+```
+修改之后保存，再次执行`git cz`时,便能看到刚才新增的了。
+![git cz](./img/commitType.jpg)
+
+### 🌟 根据commit生成Change log
+
+如果按照 **Angular提交规范** 提交代码，那么在提交代码时，会自动生成一个Change log，方便我们查看。生成的文档包括以下三个部分：
+```
+· New features
+· Bug fixes
+· Breaking changes.
+```
+
+首先需要安装一个包：[`conventional-changelog-cli`](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli)
+
+```shell
+# yarn
+yarn global add conventional-changelog-cli
+# npm
+npm install -g conventional-changelog-cli
+```
+
+切换到你的项目中执行`conventional-changelog -p angular -i CHANGELOG.md -s`即可看到根目录下生成了CHANGELOG.md文件。如图所示：下面就是之前提交的commit
+
+![changelog.png](./img/changelog.png)
+
+当然为了方便可以把此段命令添加到`package.json`的scripts中，这样每次执行`npm run changelog`即可生成Change log。
