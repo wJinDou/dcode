@@ -16,7 +16,10 @@
     "commitlint": "commitlint --edit"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "*.{js,jsx}": [
+        "eslint --fix",
+        "prettier --ignore-unknown --write"
+    ]
   },
   "dependencies": {
     "@docusaurus/core": "3.0.1",
