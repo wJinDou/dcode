@@ -2,11 +2,11 @@
 sidebar_position: 0
 ---
 
-# 📝使用commitizen格式化提交规范
+# 🌈commitizen格式化提交规范
 
 在团队的日常开发中最常使用的是**Angular提交规范**，但一般情况下都会使用vscode的插件或者第三方插件来格式化提交信息。这里我之前使用的是vscode插件：`git-commit-plugin`感觉不是很方便，后来便开始使用`commitizen`来格式化提交信息。
 
-在这里放一个传送门: [commitizen的官网](http://commitizen.github.io/cz-cli)
+> 在这里放一个传送门: [commitizen的官网](http://commitizen.github.io/cz-cli)
 
 ## ⚙️ 安装
 以下安装方式记录的是全局安装的方式
@@ -218,3 +218,62 @@ npm install -g conventional-changelog-cli
 ![changelog.png](./img/changelog.png)
 
 当然为了方便可以把此段命令添加到`package.json`的scripts中，这样每次执行`npm run changelog`即可生成Change log。
+
+## 🔍 校验commit的规范
+
+那么，为了让团队的其他成员的commit也更加规范一些。可以使用`commitlint`来约束commit的格式。
+
+> 下面的方法都是按照官网来的 commitlint 官方网站：[https://commitlint.js.org/#/](https://commitlint.js.org/#/)
+
+### 第一步、配置commitlint
+
+第需要在需要约束规范的项目中安装`commitlint`和`@commitlint/config-conventional`
+
+#### 安装依赖
+```shell
+npm install --save-dev @commitlint/config-conventional @commitlint/cli
+```
+
+#### 创建配置文件
+然后在项目根目录下执行命令创建一个`.commitlintrc.js`文件
+```shell
+echo "module.exports = { extends: ['@commitlint/config-conventional'] };" > commitlint.config.js
+```
+
+### 第二步、安装husky
+
+#### 安装依赖
+
+```shell
+npm install husky --save-dev
+# or
+yarn add husky --dev
+```
+
+#### husky添加钩子
+```shell
+npx husky add .husky/commit-msg  'npx --no -- commitlint --edit ${1}'
+```
+
+### 执行commit测试
+
+```shell
+git add .
+git commit -m "foo: this will fail"
+```
+然后就会看到失败的消息信息, 此时就代表安装成功了
+
+```shell
+MacBook-Pro d-code % git commit -m "foo: this will fail"
+✔ Preparing lint-staged...
+✔ Running tasks for staged files...
+✔ Applying modifications from tasks...
+✔ Cleaning up temporary files...
+⧗   input: foo: this will fail
+✖   type must be one of [build, chore, ci, docs, feat, fix, perf, refactor, revert, style, test] [type-enum]
+
+✖   found 1 problems, 0 warnings
+ⓘ   Get help: https://github.com/conventional-changelog/commitlint/#what-is-commitlint
+
+husky - commit-msg hook exited with code 1 (error)
+```
