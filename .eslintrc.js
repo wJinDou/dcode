@@ -30,16 +30,19 @@ module.exports = {
         // 如果你正在使用 eslint-plugin-react，其中的 react/jsx-uses-react 和 react/react-in-jsx-scope 规则将不再需要，可以关闭它们或者删除。
         'react/jsx-uses-react': 'off',
         'react/react-in-jsx-scope': 'off',
+        'react/prop-types': 'off',
     },
     // 集成默认的react eslit插件和默认的eslint的规则
     extends: [
         'plugin:react/recommended',
         'eslint:recommended',
         'eslint-config-prettier',
+        // 如果你使用的是vue.js的话
+        // 'plugin:vue/vue3-recommended',
     ],
     settings: {
         react: {
-            version: 'latest',
+            version: '^18.0.0',
         },
     },
     parserOptions: {

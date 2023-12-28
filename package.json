@@ -13,12 +13,13 @@
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "commitlint": "commitlint --edit"
+    "commitlint": "commitlint --edit",
+    "prepare": "husky install" 
   },
   "lint-staged": {
     "*.{js,jsx}": [
-        "eslint --fix",
-        "prettier --ignore-unknown --write"
+      "eslint --fix",
+      "prettier --ignore-unknown --write"
     ]
   },
   "dependencies": {
