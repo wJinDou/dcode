@@ -28,8 +28,8 @@ const config = {
     onBrokenMarkdownLinks: 'warn',
 
     i18n: {
-        defaultLocale: 'zh-Hans',
-        locales: ['zh-Hans'],
+        defaultLocale: 'en',
+        locales: ['en'],
     },
 
     markdown: {
@@ -93,15 +93,6 @@ const config = {
             footer: {
                 style: 'dark',
                 links: [
-                    {
-                        title: 'Docs',
-                        items: [
-                            {
-                                label: 'Tutorial',
-                                to: '/docs/intro',
-                            },
-                        ],
-                    },
                     {
                         title: 'Community',
                         items: [
